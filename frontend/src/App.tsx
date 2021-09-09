@@ -10,7 +10,7 @@ function App() {
     <>{/*Abrindo fragment*/}
     <NavBar/>
     <div className="container">
-      <h1 className="text-primary py-3">Sou a</h1>
+      <h1 className="text-primary py-3">Dashboard de vendas</h1>
 
       <div className="row px-3">
           <div className="col-sm-6">
