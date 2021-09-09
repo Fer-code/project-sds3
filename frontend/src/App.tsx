@@ -3,7 +3,7 @@
 function App() {
   return (
     <div>
-      <h1>Sou incrivel</h1>
+      <h1 className="text-primary">Sou a</h1>
     </div>
   );
 }
