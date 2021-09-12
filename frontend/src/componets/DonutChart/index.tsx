@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { SaleSum } from 'types/sale';
 import { BASE_URL } from 'utils/request';
@@ -12,19 +13,25 @@ type ChartData = {
 const DonutChart = () => {
 
     //Instanciar
-    let chartData : ChartData = { labels: [], series: []};
+    //Essa forma de criar variável esta certa
+    const [chartData, setCharData] = useState<ChartData>({ labels: [], series: []});
 
-    //Para pegar do backend
-    axios.get(`${BASE_URL}/sales/amount-by-seller`)
-            .then(response => {
-                const data = response.data as SaleSum[];
-                const myLabels = data.map(x => x.sellerName);
-                const mySeries = data.map(x => x.sum);
 
-                chartData : chartData = { labels: myLabels, series: mySeries};
+    //Para pegar do backend e forma correta de chamar o axios
+    useEffect(() => {
+        axios.get(`${BASE_URL}/sales/amount-by-seller`)
+        .then(response => {
+            const data = response.data as SaleSum[];
+            const myLabels = data.map(x => x.sellerName);
+            const mySeries = data.map(x => x.sum);
 
-                console.log(chartData);
-            })
+            setCharData({ labels: myLabels, series: mySeries});
+
+        });
+    } , []);
+
+
+   
         //Agora vamos fazer uma requisição assíncrona, para que o site carrege movos dados sem parar oq já tem
         //.then" - ação a ser feita quando a resposta for sucesso, dentro tem uma junção, o argumento é a resposta
         //Precisamos dividir uma lista só para strings e outra só para numbers, para caver no gráfico que nem tinhamos no mockData
